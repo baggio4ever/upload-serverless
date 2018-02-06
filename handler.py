@@ -15,6 +15,14 @@ BUCKET_NAME = os.environ['bucketName']
 
 
 def saveImage(event, context):
+    if event["headers"] is not None:
+        if "origin" in event["headers"]:
+            origin = event["headers"]["origin"]  # どこから聞かれても返せるように
+        else:
+            origin = ""
+    else:
+        origin = ""
+
     todaydetail = datetime.datetime.today()
     FILENAME = (todaydetail.strftime("%Y%m%d-%H%M%S") + '.jpg')
  
@@ -24,7 +32,10 @@ def saveImage(event, context):
  
     responce = {
          "statusCode": 200,
-         "body": "Upload Sccessful \n"
+         "body": json.dumps("Upload Sccessful"),
+        "headers": {
+            "Access-Control-Allow-Origin":origin
+        }
     }
     logger.info(responce)
     return responce

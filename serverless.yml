@@ -69,6 +69,9 @@ functions:
       - http:
           path: save
           method: post
+          private: false # API???????
+          cors: true  # API Gateway?CORS??????
+
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
 #      - sns: greeter-topic
